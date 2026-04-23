@@ -1,0 +1,16 @@
+{
+    "sf": 9,
+    "bw": 250000,
+    "center_freq": 6000,
+    "fs": 48000,
+    "bits_per_sample": 16,
+    "amplitude": 0.85,
+    "preamble_len": 8,
+    "explicit_header": true,
+    "crc_enabled": true,
+    "payload": "SF9_DEMO",
+    "output_wav": "output/sf9_signal.wav",
+    "generate_spectrogram": true,
+    "output_spectrogram": "output/sf9_spectrogram.png",
+    "output_metadata": "output/sf9_metadata.json"
+}
