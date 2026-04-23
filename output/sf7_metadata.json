@@ -10,10 +10,10 @@
     "explicit_header": true,
     "crc_enabled": true,
     "payload": "TEST",
-    "output_wav": "output/sf7_fixed.wav",
+    "output_wav": "output/sf7_signal.wav",
     "generate_spectrogram": true,
-    "output_spectrogram": "output/sf7_fixed_spec.png",
-    "output_metadata": "lora_metadata.json"
+    "output_spectrogram": "output/sf7_spectrogram.png",
+    "output_metadata": "output/sf7_metadata.json"
   },
   "calculated_parameters": {
     "t_sym_seconds": 0.001024,

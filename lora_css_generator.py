@@ -170,29 +170,33 @@ def generate_chirp(config: LoraConfig,
     f_start = config.center_freq - audio_bw / 2
     f_end = config.center_freq + audio_bw / 2
     
+    # Use actual symbol duration based on integer sample count
+    t_sym_actual = n_samples / config.fs
+    
     # Chirp rate (frequency change per second)
-    chirp_rate = audio_bw / config.t_sym
+    chirp_rate = audio_bw / t_sym_actual
     
     if chirp_type == 'up':
-        # Upchirp: frequency increases linearly
-        # Apply cyclic shift by adding phase term
-        instantaneous_freq = f_start + chirp_rate * t
+        # Upchirp: frequency increases linearly from f_start to f_end
+        # Correct phase formula: phi(t) = 2*pi * (f0*t + 0.5*k*t^2)
+        # where k is the chirp rate
+        phase = 2 * np.pi * (f_start * t + 0.5 * chirp_rate * t**2)
         
-        # Add shift as frequency offset (equivalent to cyclic shift in time domain)
+        # Apply cyclic shift for data encoding
+        # Shift in frequency domain = phase rotation in time domain
         if shift > 0:
-            shift_time = shift / config.num_symbols * config.t_sym
-            # Circular shift implementation
-            t_shifted = (t - shift_time) % config.t_sym
-            instantaneous_freq = f_start + chirp_rate * t_shifted
+            # Cyclic shift by k symbols adds phase term: exp(j*2*pi*k*t/T_sym)
+            shift_phase = 2 * np.pi * shift * t / t_sym_actual
+            phase = phase + shift_phase
     else:
-        # Downchirp: frequency decreases linearly
-        instantaneous_freq = f_end - chirp_rate * t
+        # Downchirp: frequency decreases linearly from f_end to f_start
+        # phi(t) = 2*pi * (f_end*t - 0.5*k*t^2)
+        phase = 2 * np.pi * (f_end * t - 0.5 * chirp_rate * t**2)
     
-    # Integrate frequency to get phase
-    # phase = 2*pi * integral(f(t) dt)
-    phase = 2 * np.pi * np.cumsum(instantaneous_freq) / config.fs + phase_offset
+    # Add phase offset for continuity between symbols
+    phase = phase + phase_offset
     
-    # Generate signal with windowing
+    # Generate signal
     signal = np.cos(phase)
     
     # Apply Hann window to reduce spectral leakage
