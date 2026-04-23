@@ -1,1 +1,44 @@
-Nothing should be ignored in this case. The added files are a Python script (`generate_lora_wav.py`) and a WAV audio file (`lora_for_audition.wav`), which are both legitimate project files that should be tracked in version control. There are no build artifacts, dependencies, or temporary files in the changes that would warrant adding ignore rules.
+```
+# Audio files
+*.wav
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Logs
+*.log
+
+# Environment
+.env
+.env.local
+*.env.*
+
+# Dependencies
+.venv/
+venv/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Coverage
+.coverage
+htmlcov/
+coverage/
+
+# Distribution
+dist/
+build/
+*.egg-info/
+```
