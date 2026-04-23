@@ -157,10 +157,10 @@ def generate_lora_signal(payload, sf=7, bw=125000, center_freq=4000, fs=48000):
     print("\nСборка полного сигнала...")
     full_signal = np.concatenate(all_samples)
     
-    # Нормализация амплитуды (предотвращение клиппинга)
+    # Нормализация амплитуды на максимум для лучшей видимости в спектре
     max_amplitude = np.max(np.abs(full_signal))
     if max_amplitude > 0:
-        full_signal = full_signal / max_amplitude * 0.95
+        full_signal = full_signal / max_amplitude  # Максимальная амплитуда без клиппинга
     
     total_duration = len(full_signal) / fs
     print(f"\nРезультат:")
