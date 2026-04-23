@@ -1,1 +1,1 @@
-Nothing should be ignored in this case, as the changes consist only of source/config files (.py, .json) and media files (.wav, .png) which are not build artifacts, dependencies, or temporary files.
+Nothing should be ignored in this case. The added files are a Python script (`generate_lora_wav.py`) and a WAV audio file (`lora_for_audition.wav`), which are both legitimate project files that should be tracked in version control. There are no build artifacts, dependencies, or temporary files in the changes that would warrant adding ignore rules.
